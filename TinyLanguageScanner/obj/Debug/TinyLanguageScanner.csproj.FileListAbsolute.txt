@@ -1,0 +1,11 @@
+D:\my-project\TinyLanguageScanner\TinyLanguageScanner\bin\Debug\TinyLanguageScanner.exe.config
+D:\my-project\TinyLanguageScanner\TinyLanguageScanner\bin\Debug\TinyLanguageScanner.exe
+D:\my-project\TinyLanguageScanner\TinyLanguageScanner\bin\Debug\TinyLanguageScanner.pdb
+D:\my-project\TinyLanguageScanner\TinyLanguageScanner\obj\Debug\TinyLanguageScanner.csproj.AssemblyReference.cache
+D:\my-project\TinyLanguageScanner\TinyLanguageScanner\obj\Debug\TinyLanguageScanner.Form1.resources
+D:\my-project\TinyLanguageScanner\TinyLanguageScanner\obj\Debug\TinyLanguageScanner.Properties.Resources.resources
+D:\my-project\TinyLanguageScanner\TinyLanguageScanner\obj\Debug\TinyLanguageScanner.csproj.GenerateResource.cache
+D:\my-project\TinyLanguageScanner\TinyLanguageScanner\obj\Debug\TinyLanguageScanner.csproj.CoreCompileInputs.cache
+D:\my-project\TinyLanguageScanner\TinyLanguageScanner\obj\Debug\TinyLanguageScanner.exe
+D:\my-project\TinyLanguageScanner\TinyLanguageScanner\obj\Debug\TinyLanguageScanner.pdb
+D:\my-project\TinyLanguageScanner\TinyLanguageScanner\obj\Debug\TinyLanguageScanner.exe.config
