@@ -1,56 +1,75 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-public class Scanner
+namespace TinyLanguageScanner
 {
-    static string[] keywords =
+    public class Scanner
     {
-        "int","float","string","read","write",
-        "repeat","until","if","elseif",
-        "else","then","return","endl"
-    };
-
-    public static List<Token> Scan(string code)
-    {
-        List<Token> tokens = new List<Token>();
-
-        string pattern =
-        @"(/\*.*?\*/)|("".*?"")|(:=)|(\|\|)|(&&)|(<>)|[+\-*/=<>]|[(),;{}]|[0-9]+(\.[0-9]+)?|[A-Za-z][A-Za-z0-9]*";
-
-        MatchCollection matches = Regex.Matches(code, pattern);
-
-        foreach (Match m in matches)
+        private static readonly string[] Keywords =
         {
-            string value = m.Value;
+            "int", "float", "string", "read", "write",
+            "repeat", "until", "if", "elseif",
+            "else", "then", "return", "endl"
+        };
 
-            if (Regex.IsMatch(value, @"^[0-9]+(\.[0-9]+)?$"))
-                tokens.Add(new Token("NUMBER", value));
+        public static List<Token> Scan(string code)
+        {
+            List<Token> tokens = new List<Token>();
 
-            else if (Regex.IsMatch(value, "^\".*\"$"))
-                tokens.Add(new Token("STRING", value));
+            string pattern =
+                @"(?<Comment>/\*.*?\*/)|(?<String>"".*?"")|(?<Assign>:=)|(?<Bool>\|\||&&)|(?<Rel><>)|(?<Arith>[+\-*/])|(?<RelSingle>[=<>])|(?<Symbol>[(),;{}])|(?<Number>[0-9]+(\.[0-9]+)?)|(?<Identifier>[A-Za-z][A-Za-z0-9]*)";
 
-            else if (System.Array.Exists(keywords, k => k == value))
-                tokens.Add(new Token("KEYWORD", value));
+            MatchCollection matches = Regex.Matches(code, pattern, RegexOptions.Singleline);
 
-            else if (Regex.IsMatch(value, @"^[A-Za-z][A-Za-z0-9]*$"))
-                tokens.Add(new Token("IDENTIFIER", value));
+            foreach (Match match in matches)
+            {
+                string value = match.Value;
 
-            else if (value == ":=")
-                tokens.Add(new Token("ASSIGN_OP", value));
+                if (match.Groups["Comment"].Success)
+                {
+                    continue;
+                }
 
-            else if (Regex.IsMatch(value, @"[+\-*/]"))
-                tokens.Add(new Token("ARITH_OP", value));
+                if (match.Groups["Number"].Success)
+                {
+                    tokens.Add(new Token("NUMBER", value));
+                }
+                else if (match.Groups["String"].Success)
+                {
+                    tokens.Add(new Token("STRING", value));
+                }
+                else if (Array.Exists(Keywords, keyword => keyword == value))
+                {
+                    tokens.Add(new Token("KEYWORD", value));
+                }
+                else if (match.Groups["Identifier"].Success)
+                {
+                    tokens.Add(new Token("IDENTIFIER", value));
+                }
+                else if (match.Groups["Assign"].Success)
+                {
+                    tokens.Add(new Token("ASSIGN_OP", value));
+                }
+                else if (match.Groups["Arith"].Success)
+                {
+                    tokens.Add(new Token("ARITH_OP", value));
+                }
+                else if (match.Groups["Rel"].Success || match.Groups["RelSingle"].Success)
+                {
+                    tokens.Add(new Token("COND_OP", value));
+                }
+                else if (match.Groups["Bool"].Success)
+                {
+                    tokens.Add(new Token("BOOL_OP", value));
+                }
+                else
+                {
+                    tokens.Add(new Token("SYMBOL", value));
+                }
+            }
 
-            else if (Regex.IsMatch(value, @"(<|>|=|<>)"))
-                tokens.Add(new Token("COND_OP", value));
-
-            else if (value == "&&" || value == "||")
-                tokens.Add(new Token("BOOL_OP", value));
-
-            else
-                tokens.Add(new Token("SYMBOL", value));
+            return tokens;
         }
-
-        return tokens;
     }
 }

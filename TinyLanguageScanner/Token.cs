@@ -1,11 +1,14 @@
-﻿public class Token
+namespace TinyLanguageScanner
 {
-    public string Type { get; set; }
-    public string Lexeme { get; set; }
-
-    public Token(string type, string lexeme)
+    public class Token
     {
-        Type = type;
-        Lexeme = lexeme;
+        public string Type { get; set; }
+        public string Lexeme { get; set; }
+
+        public Token(string type, string lexeme)
+        {
+            Type = type;
+            Lexeme = lexeme;
+        }
     }
 }
